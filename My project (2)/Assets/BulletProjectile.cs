@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class BulletProjectile : MonoBehaviour
 {
-    private Rigidbody bulletRigidbody;
+private Rigidbody bulletRigidbody;
+
+    public float damageAmount = 10f; // the amount of damage each bullet does
 
     private void Awake()
     {
@@ -19,7 +21,14 @@ public class BulletProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Enemy")) // assuming "Enemy" is the tag for your enemy objects
+        {
+            EnemyAI enemyDamage = other.gameObject.GetComponent<EnemyAI>();
+            if (enemyDamage != null)
+            {
+                enemyDamage.TakeDamage(damageAmount); // reduce the health of the enemy
+            }
+        }
         Destroy(gameObject);
     }
-
 }
