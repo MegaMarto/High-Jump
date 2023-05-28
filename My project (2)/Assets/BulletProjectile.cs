@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BulletProjectile : MonoBehaviour
 {
-private Rigidbody bulletRigidbody;
-
-    public float damageAmount = 10f; // the amount of damage each bullet does
+    [SerializeField] private Transform vfxHitGreen;
+    [SerializeField] private Transform vfxHitRed;
+    private Rigidbody bulletRigidbody;
 
     private void Awake()
     {
@@ -15,20 +15,20 @@ private Rigidbody bulletRigidbody;
 
     void Start()
     {
-        float speed = 20f;
+        float speed = 40f;
         bulletRigidbody.velocity = transform.forward * speed;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Enemy")) // assuming "Enemy" is the tag for your enemy objects
-        {
-            EnemyAI enemyDamage = other.gameObject.GetComponent<EnemyAI>();
-            if (enemyDamage != null)
-            {
-                enemyDamage.TakeDamage(damageAmount); // reduce the health of the enemy
-            }
+    private void OnTriggerEnter(Collider other){
+        if (other.GetComponent<BulletTarget>() != null){
+            //hit target
+            Instantiate(vfxHitGreen, transform.position, Quaternion.identity);
+        }
+        else {
+            //hit something else
+            Instantiate(vfxHitRed, transform.position, Quaternion.identity);
         }
         Destroy(gameObject);
     }
+
 }
