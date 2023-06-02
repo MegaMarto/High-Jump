@@ -17,6 +17,10 @@ namespace StarterAssets
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
+         [Header("Respawn")]
+        private float respawnHeight = -20f;
+        [SerializeField] private Transform respawnPoint;
+        [SerializeField]private Transform characterTransform;
 
         [Tooltip("Sprint speed of the character in m/s")]
         public float SprintSpeed = 5.335f;
@@ -162,6 +166,7 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+            Respawn();
         }
 
         private void LateUpdate()
@@ -403,5 +408,13 @@ namespace StarterAssets
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
         }
+        private void Respawn()
+        {
+        if (characterTransform.position.y <= respawnHeight)
+        {
+            characterTransform.position=respawnPoint.position;
+        }
+        }
+
     }
 }

@@ -23,6 +23,8 @@ public class BulletProjectile : MonoBehaviour
         if (other.GetComponent<BulletTarget>() != null){
             //hit target
             Instantiate(vfxHitGreen, transform.position, Quaternion.identity);
+            
+
         }
         else {
             //hit something else

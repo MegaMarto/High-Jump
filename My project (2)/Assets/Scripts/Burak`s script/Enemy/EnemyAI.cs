@@ -17,8 +17,8 @@ public class EnemyAI : MonoBehaviour
     public Transform raycastTransform;
     public Color rayColor = Color.red;
 
-    private NavMeshAgent agent;
-    private Animator animator;
+    protected NavMeshAgent agent;
+    protected Animator animator;
     protected bool isPerformingAction = false;
     
 
@@ -31,7 +31,7 @@ public class EnemyAI : MonoBehaviour
     public float CurrentHealth { get { return currentHealth; } }
     public float MaxHealth { get { return maxHealth; } }
 
-    private void Start()
+    public void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.avoidancePriority = Random.Range(1, 100);
@@ -63,7 +63,7 @@ public class EnemyAI : MonoBehaviour
             Vector3 rayOrigin = raycastTransform.position;
             Vector3 rayDirection = raycastTransform.forward;
 
-            // Visualize the raycast using Debug.DrawLine
+            
             Debug.DrawLine(rayOrigin, rayOrigin + rayDirection * raycastDistance, rayColor);
 
             if (Physics.Raycast(rayOrigin, rayDirection, out hit, raycastDistance))
