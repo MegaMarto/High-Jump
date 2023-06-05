@@ -3,7 +3,7 @@ using TMPro;
 
 public class UiManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI enemyHealthText;
+ [SerializeField] private TextMeshPro enemyHealthText;
 
     private void OnEnable()
     {
@@ -17,7 +17,7 @@ public class UiManager : MonoBehaviour
 
     private void UpdateEnemyHealthUI(float currentHealth, float maxHealth)
     {
-        enemyHealthText.text = $"Enemy Health: {currentHealth}/{maxHealth}";
+        enemyHealthText.text = $"{currentHealth}";
     }
 }
 

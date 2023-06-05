@@ -20,17 +20,25 @@ public class BulletProjectile : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other){
-        if (other.GetComponent<BulletTarget>() != null){
-            //hit target
-            Instantiate(vfxHitGreen, transform.position, Quaternion.identity);
-            
+            BulletTarget target = other.GetComponent<BulletTarget>();
+    if (target != null)
+    {
+        // Hit target
+        Instantiate(vfxHitGreen, transform.position, Quaternion.identity);
 
+        // Reduce the enemy's health
+        EnemyAI enemy = other.GetComponent<EnemyAI>();
+        if (enemy != null)
+        {
+            float damage = 10f; // Set this to the amount of damage you want the bullet to do
+            enemy.TakeDamage(damage);
         }
-        else {
-            //hit something else
-            Instantiate(vfxHitRed, transform.position, Quaternion.identity);
-        }
-        Destroy(gameObject);
     }
-
+    else
+    {
+        // Hit something else
+        Instantiate(vfxHitRed, transform.position, Quaternion.identity);
+    }
+    Destroy(gameObject);
+    }
 }
