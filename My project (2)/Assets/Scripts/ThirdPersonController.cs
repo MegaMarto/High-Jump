@@ -411,17 +411,9 @@ namespace StarterAssets
         private void Respawn()
         {
         if (characterTransform.position.y <= respawnHeight)
-    {
-        if (Checkpoint.CurrentCheckpoint != null)
         {
-            characterTransform.position = Checkpoint.CurrentCheckpoint.transform.position;
+            characterTransform.position=respawnPoint.position;
         }
-        else
-        {
-            // If there's no active checkpoint, respawn at the default respawn point
-            characterTransform.position = respawnPoint.position;
-        }
-    }
         }
 
     }
