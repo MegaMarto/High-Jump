@@ -27,9 +27,12 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private GameObject explosionEffectPrefab;
    
 
+     [Header("Enemy Health Elements")]
     public float currentHealth;
     public float CurrentHealth { get { return currentHealth; } }
     public float MaxHealth { get { return maxHealth; } }
+    private Color originalColor;
+    private Renderer enemyRenderer;
 
     public void Start()
     {
@@ -39,6 +42,8 @@ public class EnemyAI : MonoBehaviour
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
         EventManager.TriggerEnemyHealthChanged(currentHealth, maxHealth);
+        enemyRenderer = GetComponentInChildren<Renderer>();
+        originalColor = enemyRenderer.material.color;
 
         if (player == null)
         {
@@ -165,6 +170,7 @@ public class EnemyAI : MonoBehaviour
         currentHealth -= damage;
         EventManager.TriggerEnemyHealthChanged(currentHealth, maxHealth);
 
+         StartCoroutine(FlashRed());
         if (currentHealth <= 0)
         {
             Die();
@@ -181,6 +187,12 @@ public class EnemyAI : MonoBehaviour
         
         Debug.Log("Enemy died");
         Destroy(gameObject);
+    }
+     private IEnumerator FlashRed()
+    {
+        enemyRenderer.material.color = Color.red;
+        yield return new WaitForSeconds(1f);
+        enemyRenderer.material.color = originalColor;
     }
 }
 
