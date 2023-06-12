@@ -7,7 +7,18 @@ public class EnemyExplode : EnemyAI
     [Header("Enemy Explosion Elements")]
     public GameObject explosionPrefab;
     public float explosionRadius = 5f;
-    public Color[] damageColors;  // Array to hold the colors for different damage states
+    public int damage=30;
+    private Coroutine increaseSpeedCoroutine;  
+
+
+
+     protected new void Start()
+    {
+        base.Start();
+
+        // Get the Animator component
+        animator = GetComponent<Animator>();
+    }
 
    
     protected override IEnumerator PerformAction()
@@ -19,6 +30,26 @@ public class EnemyExplode : EnemyAI
         yield return new WaitForSeconds(1f / 1f);
 
         isPerformingAction = false;
+    }
+    protected  new void Update()
+    {
+        base.Update(); // Call the base class Update method
+        
+        
+        
+            // If the enemy is moving, play the walking animation
+            if (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+            {
+                 animator.SetBool("IsRunning", true);
+                
+                
+            }
+            else
+            {
+                animator.SetBool("IsRunning", false);
+                
+            }
+        
     }
 
     private void Explode()
@@ -32,11 +63,17 @@ public class EnemyExplode : EnemyAI
         // Iterate over each collider
         foreach (Collider collider in colliders)
         {
+            CharacterHealth character = collider.gameObject.GetComponent<CharacterHealth>();
             // Check if the collider is the player
             if (collider.transform == player)
             {
                 // Damage the player
                 // You'll need to replace this with your own logic for damaging the player(reminder)
+                if (character != null)
+                {
+                    character.TakeDamage(damage);
+                    Destroy(gameObject); // Destroy the bullet after it hits the character
+                }
                 Debug.Log("Player hit by explosion");
                 Destroy(gameObject);
 
@@ -44,29 +81,7 @@ public class EnemyExplode : EnemyAI
         }
 
     }
-     public override void TakeDamage(float damage)
-    {
-        base.TakeDamage(damage);  // Call the base class TakeDamage method
-
-        // Change color of the object according to its health.
-        MeshRenderer renderer = GetComponent<MeshRenderer>();
-        if (renderer != null)
-        {
-            float healthPercentage = currentHealth / MaxHealth;
-            int colorIndex = Mathf.Clamp(Mathf.FloorToInt((1 - Mathf.Pow(healthPercentage, 2)) * damageColors.Length), 0, damageColors.Length - 1);
-            renderer.material.color = damageColors[colorIndex];
-
-            // Check if the enemy is at the last color
-            if (colorIndex >= damageColors.Length - 1)
-            {
-                // If it is, then trigger the explosion
-                Explode();
-                Destroy(gameObject);
-            }
-        }
-        // Trigger the event
-        EventManager.TriggerEnemyHealthChanged(currentHealth, MaxHealth);
+    
 
     
-    }
 }

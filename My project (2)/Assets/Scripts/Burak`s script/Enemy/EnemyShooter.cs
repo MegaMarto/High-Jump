@@ -10,10 +10,19 @@ public class EnemyShooter : EnemyAI
     public Transform firePoint;
     public float fireRate = 1f;
     private float fireTimer = 0f;
-    private float speedDuration = 5f;
-    private Coroutine increaseSpeedCoroutine;
+    
+    
     [SerializeField]private float bulletSpeed=5f;
     
+    
+
+    protected new void Start()
+    {
+        base.Start();
+
+        // Get the Animator component
+        animator = GetComponent<Animator>();
+    }
 
     
 
@@ -39,52 +48,37 @@ public class EnemyShooter : EnemyAI
     {
         base.Update(); // Call the base class Update method
 
-        // Update the fire timer and shoot if it is time
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+        // Update the fire timer and shoot if it is time AND player is within detection radius
         fireTimer += Time.deltaTime;
-        if (fireTimer >= 1f / fireRate)
+        if (fireTimer >= 1f / fireRate && distanceToPlayer <= detectionRadius)
+    {
+        // Only shoot if enemy isn't running (agent.pathPending or remainingDistance > stoppingDistance indicates running)
+        if (!isPerformingAction && !(agent.pathPending || agent.remainingDistance > agent.stoppingDistance))
         {
             fireTimer = 0f;
-            if (!isPerformingAction)
-            {
-                StartCoroutine(PerformAction());
-            }
+            StartCoroutine(PerformAction());
         }
+    }
 
         // If the enemy isn't doing anything, play the idle animation
-        if (!isPerformingAction)
-        {
-            animator.SetFloat("Speed", 0f); // Idle animation
-
-            // Stop the speed increasing coroutine if it's running
-            if (increaseSpeedCoroutine != null)
-            {
-                StopCoroutine(increaseSpeedCoroutine);
-                increaseSpeedCoroutine = null;
-            }
-        }
-        else
-        {
+        
             // If the enemy is moving, play the walking animation
             if (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
             {
+                 animator.SetBool("IsRunning", true);
                 // Start the coroutine to increase speed over time
-                if (increaseSpeedCoroutine == null)
-                {
-                    increaseSpeedCoroutine = StartCoroutine(IncreaseSpeedOverTime());
-                }
+                
             }
             else
             {
-                animator.SetFloat("Speed", 1f); // Shooting/Performing action animation
+                animator.SetBool("IsRunning", false);
+                //animator.SetFloat("Speed", 1f); // Shooting/Performing action animation
 
-                // Stop the speed increasing coroutine if it's running
-                if (increaseSpeedCoroutine != null)
-                {
-                    StopCoroutine(increaseSpeedCoroutine);
-                    increaseSpeedCoroutine = null;
-                }
+                
             }
-        }
+        
     }
 
 
@@ -92,24 +86,5 @@ public class EnemyShooter : EnemyAI
         
         
     
-    private IEnumerator IncreaseSpeedOverTime()
-    {
-        float elapsedTime = 0f; // Time that has passed
-        float startSpeed = 0f; // Starting speed
-        float endSpeed = 5f; // Final speed
-
-        while (elapsedTime < speedDuration)
-        {
-            elapsedTime += Time.deltaTime;
-            float newSpeed = Mathf.Lerp(startSpeed, endSpeed, (elapsedTime / speedDuration));
-            animator.SetFloat("Speed", newSpeed);
-            yield return null;
-        }
-
-        // Ensure speed is set to endSpeed after the loop
-        animator.SetFloat("Speed", endSpeed);
-
-        // Reset the coroutine reference so it can be started again if needed
-        increaseSpeedCoroutine = null;
-    }
+    
 }
