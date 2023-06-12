@@ -42,10 +42,10 @@ public class ThirdPersonShooterController : MonoBehaviour
 
     private void Update()
     {
-        if (Time.time - lastShot < cooldown)
-        {
-            return;
-        }
+        //if (Time.time - lastShot < cooldown)
+        //{
+            //eturn;
+        //
 
         Vector3 mouseWorldPosition = Vector3.zero;
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
@@ -64,29 +64,14 @@ public class ThirdPersonShooterController : MonoBehaviour
             aimVirtualCamera.gameObject.SetActive(true);
             thirdPersonController.SetSensitivity(aimSensitivity);
             thirdPersonController.SetRotateOnMove(false);
-            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime *1000f));
+            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime *10f));
 
             Vector3 worldAimTarget = mouseWorldPosition;
             worldAimTarget.y = transform.position.y;
             Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
-
-            transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
-        }
-
-        
-        else
-        {
-            aims = false;
-            shotgun.SetActive(false);
-
-            aimVirtualCamera.gameObject.SetActive(false);
-            thirdPersonController.SetSensitivity(normalSensitivity);
-            thirdPersonController.SetRotateOnMove(true);
-            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 1000f));
-        }
-
-        lastShot = Time.time;
-        if (starterAssetsInputs.shoot && aims == true)
+            //Quaternion targetRotation = Quaternion.LookRotation(aimDirection, Vector3.up);
+            transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 500f);
+            if (starterAssetsInputs.shoot)
         {
             muzzleFlash.Play();
             m_shootingSound.Play();
@@ -101,6 +86,22 @@ public class ThirdPersonShooterController : MonoBehaviour
             Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up) * Quaternion.Euler(1, -3, -3));
             starterAssetsInputs.shoot = false;
         }
+        }
+
+        
+        else
+        {
+            aims = false;
+            shotgun.SetActive(false);
+
+            aimVirtualCamera.gameObject.SetActive(false);
+            thirdPersonController.SetSensitivity(normalSensitivity);
+            thirdPersonController.SetRotateOnMove(true);
+            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 1000f));
+        }
+
+        //lastShot = Time.time;
+        
     }
 } 
 
