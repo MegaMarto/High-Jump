@@ -601,14 +601,14 @@ MonoBehaviour:
   minDistanceFromOtherEnemies: 2
   raycastDistance: 1
   objectTag: Enemy
-  raycastTransform: {fileID: 0}
+  raycastTransform: {fileID: 1959427579911931246}
   rayColor: {r: 1, g: 0, b: 0, a: 1}
   maxHealth: 100
   explosionEffectPrefab: {fileID: 0}
   currentHealth: 0
   bulletPrefab: {fileID: 5358891726627026569, guid: c9b85fe1ad74a05449e5bb10097673ee,
     type: 3}
-  firePoint: {fileID: 0}
+  firePoint: {fileID: 881203942418475183}
   fireRate: 1
   bulletSpeed: 5
 --- !u!114 &-3153188193380341827

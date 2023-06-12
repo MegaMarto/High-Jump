@@ -33,6 +33,7 @@ public class ThirdPersonShooterController : MonoBehaviour
     {
         m_shootingSound = GetComponent<AudioSource>();
     }
+    
     private void Awake()
     {
         thirdPersonController = GetComponent<ThirdPersonController>();
@@ -64,16 +65,16 @@ public class ThirdPersonShooterController : MonoBehaviour
             aimVirtualCamera.gameObject.SetActive(true);
             thirdPersonController.SetSensitivity(aimSensitivity);
             thirdPersonController.SetRotateOnMove(false);
-            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime *1000f));
+            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 1000f));
 
             Vector3 worldAimTarget = mouseWorldPosition;
             worldAimTarget.y = transform.position.y;
             Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
 
-            transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
+            // Use Quaternion.Slerp for rotation
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(aimDirection), Time.deltaTime * 1000f);
         }
 
-        
         else
         {
             aims = false;

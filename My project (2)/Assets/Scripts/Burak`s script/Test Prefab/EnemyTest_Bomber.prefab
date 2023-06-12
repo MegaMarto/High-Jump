@@ -1948,7 +1948,7 @@ MonoBehaviour:
   minDistanceFromOtherEnemies: 2
   raycastDistance: 1
   objectTag: Enemy
-  raycastTransform: {fileID: 0}
+  raycastTransform: {fileID: 2155852663650757546}
   rayColor: {r: 1, g: 0, b: 0, a: 1}
   maxHealth: 100
   explosionEffectPrefab: {fileID: 0}
@@ -1956,6 +1956,7 @@ MonoBehaviour:
   explosionPrefab: {fileID: 9157300793123180314, guid: c083ef085bc7f3f43a27346b8bc4a2d7,
     type: 3}
   explosionRadius: 5
+  damage: 30
 --- !u!195 &8328187842740731047
 NavMeshAgent:
   m_ObjectHideFlags: 0

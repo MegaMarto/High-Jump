@@ -7097,6 +7097,7 @@ GameObject:
   - component: {fileID: 7331827939454171693}
   - component: {fileID: 846105664463738578}
   - component: {fileID: 4645543814260500785}
+  - component: {fileID: 3549709243453727778}
   m_Layer: 8
   m_Name: Character
   m_TagString: Player
@@ -7470,6 +7471,21 @@ MonoBehaviour:
   muzzleFlash: {fileID: 7817704096829686747}
   aims: 0
   shotgun: {fileID: 877365633587682490}
+--- !u!114 &3549709243453727778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7331827939454171681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8a2b62411202c4ea7633c3581d21a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  healthText: {fileID: 0}
 --- !u!1 &7365244934674943613
 GameObject:
   m_ObjectHideFlags: 0
