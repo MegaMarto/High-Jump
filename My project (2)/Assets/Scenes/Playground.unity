@@ -4888,7 +4888,7 @@ PrefabInstance:
     - target: {fileID: 921198360657076160, guid: 9932352123116bb4295b40765134900e,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5752240729111449945, guid: 9932352123116bb4295b40765134900e,
         type: 3}
@@ -35015,7 +35015,7 @@ PrefabInstance:
     - target: {fileID: 6485280336439069055, guid: f53ca564a2ad89e41a41ff8c2ade685b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6568981053591645188, guid: f53ca564a2ad89e41a41ff8c2ade685b,
         type: 3}
@@ -42897,10 +42897,10 @@ MonoBehaviour:
   pfBulletProjectile: {fileID: 8155722322417726982, guid: 69744efc89f75224bb838ffac39713af,
     type: 3}
   spawnBulletPosition: {fileID: 940964901}
-  cooldown: 0.4
   muzzleFlash: {fileID: 0}
   aims: 0
   shotgun: {fileID: 0}
+  timeBetweenShots: 0.5
 --- !u!4 &1762682267 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3893294197879345259, guid: 64dce48905ffd9b4293e595fa6941544,
