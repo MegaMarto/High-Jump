@@ -84,7 +84,6 @@ public class EnemyAI : MonoBehaviour
                 if (currentHealth <= lowHealthThreshold)
                 {
                     AvoidPlayer();
-                    
                 }
                 else
                 {

@@ -1899,7 +1899,7 @@ Animator:
   m_GameObject: {fileID: 6485280336439069055}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 36078ab0369161e49a29d349ae3e0739, type: 3}
-  m_Controller: {fileID: 9100000, guid: 9cdab8f491de64c41967b5778b6bbab9, type: 2}
+  m_Controller: {fileID: 9100000, guid: 40db3173a05ae3242b1c182a09b0a183, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1956,6 +1956,10 @@ MonoBehaviour:
   explosionPrefab: {fileID: 9157300793123180314, guid: c083ef085bc7f3f43a27346b8bc4a2d7,
     type: 3}
   explosionRadius: 5
+  damageColors:
+  - {r: 1, g: 0.74128515, b: 0, a: 0}
+  - {r: 0.8018868, g: 0.5943396, b: 0, a: 0}
+  - {r: 0.7075472, g: 0.42284766, b: 0, a: 0}
 --- !u!195 &8328187842740731047
 NavMeshAgent:
   m_ObjectHideFlags: 0
