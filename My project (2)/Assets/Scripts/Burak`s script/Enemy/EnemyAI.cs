@@ -11,6 +11,7 @@ public class EnemyAI : MonoBehaviour
     public float avoidDistance = 8f;
     public float lowHealthThreshold = 30f;
     public float minDistanceFromOtherEnemies = 2f;
+    public bool canStandAndAttack = false;
 
     public float raycastDistance = 1f;
     public string objectTag = "Enemy";
@@ -102,7 +103,11 @@ public class EnemyAI : MonoBehaviour
 
     private void ChaseAndAttackPlayer(float distanceToPlayer)
     {
+        if(!canStandAndAttack)
+        {
         agent.SetDestination(player.position);
+        }
+        
 
         // Rotate towards the player
         Vector3 directionToPlayer = (player.position - transform.position).normalized;

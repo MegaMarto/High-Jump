@@ -41,7 +41,17 @@ public class EnemyShooter : EnemyAI
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
-        bulletRigidbody.velocity = transform.forward * bulletSpeed;
+         if (canStandAndAttack) 
+        {
+        // If enemy can stand and attack, calculate direction towards the player
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        bulletRigidbody.velocity = directionToPlayer * bulletSpeed;
+        }
+        else 
+        {
+            // Else, bullet goes forward as per the enemy's forward direction
+            bulletRigidbody.velocity = transform.forward * bulletSpeed;
+        }
     }
 
      protected new void Update()
