@@ -20,24 +20,13 @@ public class ThirdPersonShooterController : MonoBehaviour
 
     private ThirdPersonController thirdPersonController;
     private StarterAssetsInputs starterAssetsInputs;
-    private Animator animator;
 
-    public ParticleSystem muzzleFlash;
+    
 
-    public bool aims;
-    public GameObject shotgun;
-
-    AudioSource m_shootingSound;
-
-    void Start()
-    {
-        m_shootingSound = GetComponent<AudioSource>();
-    }
     private void Awake()
     {
         thirdPersonController = GetComponent<ThirdPersonController>();
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
-        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -58,13 +47,9 @@ public class ThirdPersonShooterController : MonoBehaviour
 
         if (starterAssetsInputs.aim)
         {
-            aims = true;
-            shotgun.SetActive(true);
-
             aimVirtualCamera.gameObject.SetActive(true);
             thirdPersonController.SetSensitivity(aimSensitivity);
             thirdPersonController.SetRotateOnMove(false);
-            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime *1000f));
 
             Vector3 worldAimTarget = mouseWorldPosition;
             worldAimTarget.y = transform.position.y;
@@ -76,20 +61,15 @@ public class ThirdPersonShooterController : MonoBehaviour
         
         else
         {
-            aims = false;
-            shotgun.SetActive(false);
-
             aimVirtualCamera.gameObject.SetActive(false);
             thirdPersonController.SetSensitivity(normalSensitivity);
             thirdPersonController.SetRotateOnMove(true);
-            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 1000f));
         }
 
         lastShot = Time.time;
-        if (starterAssetsInputs.shoot && aims == true)
+        if (starterAssetsInputs.shoot)
         {
-            muzzleFlash.Play();
-            m_shootingSound.Play();
+            
 
             Vector3 aimDir = (mouseWorldPosition - spawnBulletPosition.position).normalized;
             Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
